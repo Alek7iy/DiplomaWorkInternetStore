@@ -1,5 +1,7 @@
 # Online Shop API
 
+RESTful API for an online store built with Spring Boot, Java 17, PostgreSQL and  Docker.
+
 
 ## Technologies
 - Java 17
@@ -8,3 +10,4 @@
 - Spring Security
 - Flyway
 - Swagger UI
+- Docker
