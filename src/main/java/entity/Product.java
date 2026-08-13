@@ -34,8 +34,16 @@ public class Product {
     @Column(nullable = false)
     private Integer stockQuantity;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status = Status.ACTIVE;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    public enum Status {
+        ACTIVE, INACTIVE, OUT_OF_STOCK
+    }
 }
 
 

@@ -1,5 +1,6 @@
 package Controller;
 
+import DTO.AddToOrderRequest;
 import DTO.CreateOrderRequest;
 import DTO.OrderResponse;
 import Service.OrderService;
@@ -36,5 +37,55 @@ public class OrderController {
     ) {
         OrderResponse response = orderService.createOrder(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping("/{orderId}/items/{itemId}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @Operation(summary = "Удалить товар из заказа")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Товар удалён из заказа"),
+            @ApiResponse(responseCode = "404", description = "Заказ или товар не найден"),
+            @ApiResponse(responseCode = "403", description = "Нельзя удалить товар из чужого заказа")
+    })
+    public ResponseEntity<Void> removeItemFromOrder(
+            @PathVariable Long orderId,
+            @PathVariable Long itemId,
+            @RequestHeader("X-User-ID") Long userId
+    ) {
+        orderService.removeItemFromOrder(orderId, itemId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{orderId}/items")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @Operation(summary = "Добавить товар в заказ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Товар добавлен в заказ"),
+            @ApiResponse(responseCode = "400", description = "Недостаточно товара на складе"),
+            @ApiResponse(responseCode = "403", description = "Нельзя изменить чужой заказ")
+    })
+    ResponseEntity<OrderResponse> addItemToOrder(
+            @PathVariable Long orderId,
+            @RequestHeader("X-User-ID") Long userId,
+            @RequestBody @Valid AddToOrderRequest request
+    ) {
+        OrderResponse response = orderService.addItemToOrder(orderId, userId, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{orderId}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @Operation(summary = "Отменить заказ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Заказ отменён"),
+            @ApiResponse(responseCode = "403", description = "Нельзя отменить чужой заказ"),
+            @ApiResponse(responseCode = "400", description = "Заказ нельзя отменить в текущем статусе")
+    })
+    ResponseEntity<Void> cancelOrder(
+            @PathVariable Long orderId,
+            @RequestHeader("X-User-ID") Long userId
+    ) {
+        orderService.cancelOrder(orderId, userId);
+        return ResponseEntity.noContent().build();
     }
 }
