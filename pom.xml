@@ -107,13 +107,6 @@
             <version>1.18.46</version>
             <optional>true</optional>
         </dependency>
-        <!--H2 DataBase разработки и тестирования-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.2.224</version>
-            <scope>runtime</scope>
-        </dependency>
         <!--Validator API-->
         <dependency>
             <groupId>jakarta.validation</groupId>
