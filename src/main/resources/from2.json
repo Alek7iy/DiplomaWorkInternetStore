@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "Shop Demo User API",
+    "description": "Операции с пользователями и защищённые эндпоинты"
+  },
+  "variable": [
+    {
+      "key": "auth_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Получить информацию о текущем пользователе",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/user/me",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "user", "me"]
+        }
+      }
+    },
+    {
+      "name": "Защищённый эндпоинт для пользователей (ROLE_USER)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/protected/user",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "protected", "user"]
+        }
+      }
+    },
+    {
+      "name": "Административный эндпоинт (ROLE_ADMIN)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/protected/admin",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "protected", "admin"]
+        }
+      }
+    }
+  ]
+}

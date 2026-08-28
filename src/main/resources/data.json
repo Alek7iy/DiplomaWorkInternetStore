@@ -1,0 +1,168 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@shop.com",
+      "role": {
+        "id": 1,
+        "name": "ADMIN"
+      },
+      "created_at": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "email": "customer1@shop.com",
+      "role": {
+        "id": 2,
+        "name": "USER"
+      },
+      "created_at": "2024-02-20T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "email": "customer2@shop.com",
+      "role": {
+        "id": 2,
+        "name": "USER"
+      },
+      "created_at": "2024-03-10T09:45:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Электроника",
+      "description": "Смартфоны, ноутбуки, планшеты и аксессуары"
+    },
+    {
+      "id": 2,
+      "name": "Одежда",
+      "description": "Мужская, женская и детская одежда"
+    },
+    {
+      "id": 3,
+      "name": "Книги",
+      "description": "Художественная литература, учебники, комиксы"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Смартфон XYZ Pro",
+      "description": "Флагманский смартфон с камерой 108 Мп и 12 ГБ ОЗУ",
+      "price": 59999.99,
+      "category": {
+        "id": 1,
+        "name": "Электроника"
+      },
+      "stock_quantity": 15
+    },
+    {
+      "id": 2,
+      "name": "Ноутбук ABC Air",
+      "description": "Ультрабук с процессором Intel i7 и 16 ГБ ОЗУ",
+      "price": 89999.50,
+      "category": {
+        "id": 1,
+        "name": "Электроника"
+      },
+      "stock_quantity": 8
+    },
+    {
+      "id": 3,
+      "name": "Футболка хлопковая",
+      "description": "Классическая футболка унисекс, 100 % хлопок",
+      "price": 1499.00,
+      "category": {
+        "id": 2,
+        "name": "Одежда"
+      },
+      "stock_quantity": 50
+    },
+    {
+      "id": 4,
+      "name": "Роман 'Мастер и Маргарита'",
+      "description": "Знаменитый роман Михаила Булгакова",
+      "price": 699.90,
+      "category": {
+        "id": 3,
+        "name": "Книги"
+      },
+      "stock_quantity": 25
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "user": {
+        "id": 2,
+        "email": "customer1@shop.com"
+      },
+      "total_amount": 61498.99,
+      "status": "COMPLETED",
+      "created_at": "2024-04-05T12:30:00Z",
+      "items": [
+        {
+          "id": 1,
+          "product": {
+            "id": 1,
+            "name": "Смартфон XYZ Pro"
+          },
+          "quantity": 1,
+          "price_at_moment": 59999.99
+        },
+        {
+          "id": 2,
+          "product": {
+            "id": 3,
+            "name": "Футболка хлопковая"
+          },
+          "quantity": 1,
+          "price_at_moment": 1499.00
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "user": {
+        "id": 3,
+        "email": "customer2@shop.com"
+      },
+      "total_amount": 89999.50,
+      "status": "PROCESSING",
+      "created_at": "2024-04-10T16:45:00Z",
+      "items": [
+        {
+          "id": 3,
+          "product": {
+            "id": 2,
+            "name": "Ноутбук ABC Air"
+          },
+          "quantity": 1,
+          "price_at_moment": 89999.50
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "user": {
+        "id": 2,
+        "email": "customer1@shop.com"
+      },
+      "total_amount": 1399.80,
+      "status": "PENDING",
+      "created_at": "2024-04-12T08:20:00Z",
+      "items": [
+        {
+          "id": 4,
+          "product": {
+            "id": 4,
+            "name": "Роман 'Мастер и Маргарита'"
+          },
+          "quantity": 2,
+          "price_at_moment": 699.90
+        }
+      ]
+    }
+  ]
+}

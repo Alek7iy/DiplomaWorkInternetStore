@@ -7,11 +7,13 @@ import DTO.OrderResponse;
 import Repository.OrderRepository;
 import Repository.ProductRepository;
 import Repository.UserRepository;
+import Transfers.OrderStatus;
 import entity.Order;
 import entity.OrderItem;
 import entity.Product;
 import entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +30,16 @@ import Exception.BusinessException;
 @RequiredArgsConstructor
 public class OrderService {
 
+    @Autowired
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+
+    public Order createOrder(Order order){
+        order.setStatus(OrderStatus.CREATED.name());
+        order.setCreatedAt(LocalDateTime.now());
+        return orderRepository.save(order);
+    }
 
     private OrderResponse toOrderResponse(Order order) {
         List<OrderItemResponse> itemResponses = order.getItems().stream()
@@ -167,7 +176,7 @@ public class OrderService {
 
     @Transactional
     public void removeItemFromOrder(Long orderId, Long orderItemId, Long userId) {
-        // 1. Находим заказ
+        //Находим заказ
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + orderId));
 
@@ -227,6 +236,8 @@ public class OrderService {
 
         //Сохранение изменений
         orderRepository.save(order);
+
     }
 }
+
 

@@ -1,0 +1,179 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Shop API",
+    "description": "API для интернет‑магазина",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Support Team",
+      "email": "Alek7iyOlinder@yandex.ru"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.shop.com",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "CategoryRequest": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Электроника",
+            "description": "Название категории"
+          },
+          "description": {
+            "type": "string",
+            "example": "Электронные устройства и гаджеты",
+            "description": "Описание категории"
+          }
+        }
+      },
+      "CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1,
+            "description": "ID категории"
+          },
+          "name": {
+            "type": "string",
+            "example": "Электроника",
+            "description": "Название категории"
+          },
+          "description": {
+            "type": "string",
+            "example": "Электронные устройства и гаджеты",
+            "description": "Описание категории"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["ACTIVE", "INACTIVE"],
+            "example": "ACTIVE",
+            "description": "Статус категории"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/categories": {
+      "get": {
+        "summary": "Получить активные категории",
+        "operationId": "getActiveCategories",
+        "tags": ["Categories"],
+        "responses": {
+          "200": {
+            "description": "Список активных категорий",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Создать категорию",
+        "operationId": "createCategory",
+        "tags": ["Categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Категория создана",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректные данные"
+          },
+          "403": {
+            "description": "Доступ запрещён"
+          }
+        }
+      }
+    },
+    "/api/categories/{id}": {
+      "delete": {
+        "summary": "Удалить категорию",
+        "operationId": "deleteCategory",
+        "tags": ["Categories"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "ID категории для удаления"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Категория удалена"
+          },
+          "404": {
+            "description": "Категория не найдена"
+          }
+        }
+      }
+    }
+  }
+}

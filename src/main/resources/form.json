@@ -1,145 +1,55 @@
 {
-  "openapi": "3.0.3",
   "info": {
-    "title": "My Project API",
-    "description": "API для управления пользователями и заказами",
-    "version": "1.0.0"
+    "name": "Shop Demo Auth API",
+    "description": "Аутентификация, регистрация и управление пользователями"
   },
-
-  "servers": [
+  "item": [
     {
-      "url": "https://localhost:5432/postgres",
-      "description": "Локальный сервер"
-    },
-    {
-      "url": "https://api.myproject.com",
-      "description": "Продакшен-сервер"
-    }
-  ],
-  "paths": {
-    "/users": {
-      "get": {
-        "summary": "Получить список пользователей",
-        "operationId": "getUsers",
-        "responses": {
-          "200": {
-            "description": "Успешный ответ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Создать нового пользователя",
-        "operationId": "createUser",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Пользователь создан",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "summary": "Получить пользователя по ID",
-        "operationId": "getUserById",
-        "parameters": [
+      "name": "Регистрация пользователя",
+      "request": {
+        "method": "POST",
+        "header": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "key": "Content-Type",
+            "value": "application/json"
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Успешный ответ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Пользователь не найден"
-          }
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user{{$randomInt}}@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/auth/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "auth", "register"]
         }
       }
-    }
-  },
-  "components": {
-    "schemas": {
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 1
-          },
-          "name": {
-            "type": "string",
-            "example": "Иван Иванов"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "ivan@example.com"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
+    },
+    {
+      "name": "Аутентификация (получение JWT‑токена)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
           }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
         },
-        "required": ["id", "name", "email"]
-      },
-      "CreateUserRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "format": "password"
-          }
+        "url": {
+          "raw": "http://localhost:8080/api/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "auth", "login"]
         },
-        "required": ["name", "email", "password"]
+        "response": []
       }
     }
-  }
+  ]
 }

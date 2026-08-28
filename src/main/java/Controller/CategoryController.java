@@ -23,7 +23,7 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
-    private final CategoryRepository categoryRepository; // добавьте эту строку
+    private final CategoryRepository categoryRepository;
 
 
     @PostMapping
