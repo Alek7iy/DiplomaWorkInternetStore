@@ -8,6 +8,7 @@ import Repository.OrderRepository;
 import Repository.ProductRepository;
 import Repository.UserRepository;
 import Transfers.OrderStatus;
+import Transfers.PaymentStatus;
 import entity.Order;
 import entity.OrderItem;
 import entity.Product;
@@ -29,6 +30,9 @@ import Exception.BusinessException;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+
+    @Autowired
+    private PaymentService paymentService;
 
     @Autowired
     private final OrderRepository orderRepository;
@@ -237,6 +241,12 @@ public class OrderService {
         //Сохранение изменений
         orderRepository.save(order);
 
+    }
+    public Order getOrderWithPaymentStatus(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setPaymentStatus(paymentService.getPaymentStatus(orderId));
+        return order;
     }
 }
 

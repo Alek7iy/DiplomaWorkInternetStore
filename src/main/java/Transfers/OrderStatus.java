@@ -1,6 +1,15 @@
 package Transfers;
 
 public enum OrderStatus {
-    CREATED, PAID, CANCELLED, COMPLETED
+    CREATED,
+    ACTIVE,
+    PAID,
+    CANCELLED,
+    COMPLETED,
+    NEW,
+    PENDING_PAYMENT,
+    FAILED,
+    SHIPPING,
+    DELIVERED,
 }
 

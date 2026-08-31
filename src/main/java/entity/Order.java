@@ -1,5 +1,6 @@
 package entity;
 
+import Transfers.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,4 +36,23 @@ public class Order {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    private PaymentStatus paymentStatus;
+    private LocalDateTime paidAt;
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public LocalDateTime getPaidAt() {
+        return paidAt;
+    }
+
+    public void setPaidAt(LocalDateTime paidAt) {
+        this.paidAt = paidAt;
+    }
 }
